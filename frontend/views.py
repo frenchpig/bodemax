@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from api.models import Category
 
 # Create your views here.
 
@@ -7,4 +8,5 @@ def loadIndex(request):
   return render(request, 'index.html')
 
 def loadAddProduct(request):
-  return render(request, 'agregar-producto.html')
+  categories = Category.objects.all()
+  return render(request, 'agregar-producto.html', {'categories': categories})

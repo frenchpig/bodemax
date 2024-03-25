@@ -4,6 +4,30 @@
 {%block title%}Agregado{% endblock %}
 
 {% block content %}
+
+<!-- Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="categoryModalLabel">Agregar Categoria</h1>
+        <button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addCategoryForm">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombreCategoria" placeholder="Nombre de la categoria">
+          </div>
+          <button type="submit" class="btn btn-success">Agregar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="row w-100">
   <h1>Ingreso de producto</h1>
 </div>
@@ -15,6 +39,16 @@
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre</label>
           <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto">
+        </div>
+        <label for="categoria" class="form-label">Categoría</label>
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-success" type="button" id="button-addon" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="bi bi-plus"></i></button>
+          <select class="form-select" id="categoria" name="categoria" aria-describedby="button-addon">
+            <option value='0'>Seleccione una categoría</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="mb-3">
           <label for="precio" class="form-label">Precio</label>
