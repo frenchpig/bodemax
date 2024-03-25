@@ -51,7 +51,7 @@ document.getElementById("addItemForm").addEventListener("submit", function (even
     .catch(error => {
       console.error('Error:', error);
     });
-    this.submit();
+    window.location.reload();
 });
 
 document.getElementById("addCategoryForm").addEventListener("submit", function (event) {
