@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local development settings
+.env
+
+# Django's default SQLite database file
+db.sqlite3
+
+# Media files
+/media/
+*.log
+
+# Static files
+/static/
+
+# Dependency directories
+venv/
+node_modules/
+
+# IDE specific files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Compiled Python files
+*.pyc
+
+# macOS files
+.DS_Store
