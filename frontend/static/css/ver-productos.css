@@ -1,0 +1,4 @@
+.card-body {
+  max-height: 600px; /* Set a fixed height for the card body */
+  overflow-y: auto; /* Add vertical scrollbar when content overflows */
+}

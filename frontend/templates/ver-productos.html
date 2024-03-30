@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block title%}Agregado{% endblock %}
+
+<!-- id = models.AutoField(primary_key=True)
+  name = models.CharField(max_length=100)
+  price = models.IntegerField()
+  stock = models.IntegerField()
+  description = models.TextField()
+  category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True) -->
+
+  
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/ver-productos.css' %}">
+{% endblock %}
+  
+{% block content %}
+<div class="row w-100">
+  <h1 href="https://www.youtube.com/watch?v=ggDbDRUauzo&ab_channel=billnyetherussianspy">Ver Productos</h1>
+</div>
+<div class="container-fluid vh-100">
+  <div class="row w-100">
+    <div class="card custom-card">
+      <div class="card-body overflow-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Categoria</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Juguete de bebe</td>
+              <td>$5.000</td>
+              <td>20</td>
+              <td>Un juguete para tu bebe</td>
+              <td>Infantes</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Juguete de perro</td>
+              <td>$10.000</td>
+              <td>20</td>
+              <td>Un juguete para tu perro</td>
+              <td>Caninos</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Juguete de Gato</td>
+              <td>$15.000</td>
+              <td>20</td>
+              <td>Un juguete para tu gato</td>
+              <td>Felinos</td>
+            </tr>
+            <!-- Additional rows here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

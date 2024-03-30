@@ -10,3 +10,6 @@ def loadIndex(request):
 def loadAddProduct(request):
   categories = Category.objects.all()
   return render(request, 'agregar-producto.html', {'categories': categories})
+
+def loadViewProducts(request):
+  return render(request, 'ver-productos.html')

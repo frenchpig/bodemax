@@ -1,0 +1,5 @@
+a {
+  text-decoration: none; /* Elimina el subrayado */
+  color: inherit; /* Toma el color del texto padre */
+  cursor: pointer; /* Cambia el cursor a puntero para indicar que es interactivo */
+}

@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
   path('', views.loadIndex),
-  path('agregar-producto', views.loadAddProduct)
+  path('agregar-producto', views.loadAddProduct),
+  path('ver-productos', views.loadViewProducts)
 ]
 
