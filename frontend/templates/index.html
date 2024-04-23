@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {%block title%}Inicio{% endblock %}
 
 {% block content %}
 <div class="row w-100">
-  <h1>Esta pagina aun se encuentra en desarrollo!</h1>
+  <h1 id="temperatura">Esta pagina aun se encuentra en desarrollo!</h1>
 </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/api-clima.js' %}"></script>
 {% endblock %}
 
