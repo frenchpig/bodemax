@@ -27,9 +27,14 @@ function getWeather(latitud, longitud,callback) {
 
 getCoords(function (ubicacion){
   getWeather(ubicacion.latitud,ubicacion.longitud,function(data){
+    console.log(data);
     let temperatura = data.main.temp-273.15;
     let texto = document.getElementById("temperatura");
     texto.innerHTML = `${temperatura.toFixed(1)}°C`;
-    
+    let weatherIconCode = data.weather[0].icon;
+    let weatherIconURL = `http://openweathermap.org/img/wn/${weatherIconCode}.png`;
+    let img = document.getElementById('weatherIMG');
+    img.src=weatherIconURL;
+    img.alt=data.weather[0].description;
   });
 });
