@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from . import views
+from rest_framework.routers import DefaultRouter
+from .views import *
+
+router=DefaultRouter()
+router.register(r'items',ItemViewSet)
 
 urlpatterns = [
-  path('create-item/', views.create_item, name="create_item"),
-  path('create-category/', views.create_category, name="create_category")
+  path('',include(router.urls))
 ]
 
