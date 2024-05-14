@@ -44,14 +44,9 @@
           <label for="nombre" class="form-label">Nombre</label>
           <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto">
         </div>
-        <label for="categoria" class="form-label">Categoría</label>
-        <div class="input-group mb-3">
-          <button class="btn btn-outline-success" type="button" id="button-addon" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="bi bi-plus"></i></button>
-          <select class="form-select" id="categoria" name="categoria" aria-describedby="button-addon">
-            <option value='0'>Seleccione una categoría</option>
-            {% for category in categories %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
-            {% endfor %}
+        <div class="mb-3">
+          <label for="categoria" class="form-label">Categoria</label>
+          <input type="text" class="form-control" id="categoria" placeholder="Categoria del producto">
           </select>
         </div>
         <div class="mb-3">
@@ -65,6 +60,16 @@
         <div class="mb-3">
           <label for="descripcion" class="form-label">Descripción</label>
           <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del producto"></textarea>
+        </div>
+        {% comment %} Usuario a agregar el item {% endcomment %}
+        <label for="categoria" class="form-label">Usuario</label>
+        <div class="input-group mb-3">
+          <select class="form-select" id="user" name="user">
+            <option value='0'>Seleccione un usuario</option>
+            {% for extendeduser in extendedusers %}
+            <option value="{{ extendeduser.api_key }}">{{ extendeduser.user.username }}</option>
+            {% endfor %}
+          </select>
         </div>
         <button type="submit" class="btn btn-primary">Agregar Producto</button>
       </form>
