@@ -38,7 +38,6 @@
 <div class="row w-100">
   <div class="card">
     <div class="card-body">
-      <form id="addItemForm">
         {% csrf_token %}
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre</label>
@@ -71,8 +70,7 @@
             {% endfor %}
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Agregar Producto</button>
-      </form>
+        <button id="addItemButton" type="button" class="btn btn-primary">Agregar Producto</button>
     </div>
   </div>
 </div>

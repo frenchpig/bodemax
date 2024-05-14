@@ -1,83 +1,51 @@
-const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
-document.getElementById("addItemForm").addEventListener("submit", function (event) {
-  event.preventDefault()
-  // Realizar comprobaciones antes de enviar el formulario
-  let nombre = document.getElementById("nombre").value;
-  let precio = document.getElementById("precio").value;
-  let stock = document.getElementById("stock").value;
-  let descripcion = document.getElementById("descripcion").value;
-  let categoria = document.getElementById("categoria").value;
+let inputId = ['nombre', 'categoria', 'precio', 'stock', 'descripcion', 'user']
+let addItemButton = document.getElementById('addItemButton');
+let dataMapping = { 'nombre': 'name', 'categoria': 'category', 'precio': 'price', 'stock': 'stock', 'descripcion': 'description', 'user': 'user_key' };
 
-  if (nombre.trim() === '' || precio.trim() === '' || stock.trim() === '' || descripcion.trim() === '') {
-    alert("Por favor, complete todos los campos");
-    return;
-  }
-  if (isNaN(parseFloat(precio)) || parseFloat(precio) <= 0) {
-    alert("El precio debe ser un número mayor que cero.");
-    return;
-  }
-  if (isNaN(parseInt(stock)) || parseInt(stock) <= 0) {
-    alert("El stock debe ser un número entero mayor que cero.");
-    return;
-  }
-  if (categoria==0){
-    alert("Se debe seleccionar una categoria");
-    return;
-  }
+addItemButton.addEventListener('click', function () {
+  let data = { 'name': null, 'price': null, 'stock': null, 'description': null, 'category': null, 'user_key': null }
+  inputId.forEach(element => {
+    let input = document.getElementById(element);
+    let value = input.value;
+    data[dataMapping[element]] = value;
+  });
+  addToDataBase(data);
+  clearAddInputs();
+});
 
-  const data = {
-    nombre: nombre,
-    precio: precio,
-    stock: stock,
-    descripcion: descripcion,
-    categoria: categoria
-  };
+function addToDataBase(data) {
+  let url = 'http://localhost:8000/api/items/';
 
-  fetch('/api/create-item/', {
+  fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken, // Asegúrate de obtener el token CSRF
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: JSON.stringify(data)
+    body: new URLSearchParams(data)
   })
     .then(response => {
-      if (response.ok) {
-        console.log('Item creado correctamente');
+      if (response.status === 201) {
+        alert("Producto creado exitosamente.");
+      } else if (response.status === 400) {
+        alert("Error en los datos de entrada.");
+      } else if (response.status === 403) {
+        alert("No tienes permisos para realizar esta acción.");
       } else {
-        console.error('Error al crear el item');
+        alert(`Error al crear el producto. Código de estado: ${response.status}`);
       }
     })
     .catch(error => {
-      console.error('Error:', error);
+      alert("Error al realizar la solicitud:", error);
     });
-    window.location.reload();
-});
+}
 
-document.getElementById("addCategoryForm").addEventListener("submit", function (event) {
-  event.preventDefault()
-  let nombre = document.getElementById("nombreCategoria").value;
-  console.log('hola ', nombre);
-  const data = {
-    nombre: nombre
-  }
-  fetch('/api/create-category/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken, // Asegúrate de obtener el token CSRF
-    },
-    body: JSON.stringify(data)
-  })
-    .then(response => {
-      if (response.ok) {
-        console.log('Categoria creado correctamente');
-        window.location.reload();
-      } else {
-        console.error('Error al crear el item');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-});
+function clearAddInputs(){
+  inputId.forEach(element=>{
+    let input = document.getElementById(element);
+    if (input.tagName==='SELECT'){
+      input.selectedIndex = 0;
+    }else{
+      input.value = '';
+    }
+  });
+}
