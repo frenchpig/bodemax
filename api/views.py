@@ -34,6 +34,7 @@ class ItemViewSet(viewsets.ModelViewSet):
   def list(self, request, *args, **kwargs):
     #recupera la api key recepcionada comprobando de que exista
     api_key = request.GET.get('user_key',None)
+    print(api_key)
     if api_key is None:
       return Response({'error': 'api_key required'}, status=status.HTTP_400_BAD_REQUEST)
     #comprueba la valides de dicha api key con datos de la BBDD
@@ -45,7 +46,7 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer = self.serializer_class(queryset,many=True)
     return Response(serializer.data)
   
-  #PUT
+  # PATCH (Importante que el metodo sea este debido a que por definicion es el que es necesario, ademas que por su metodo de implementacion es el que se necesita.)
   #define que se realizara al momento de utilizar metodo PUT
   #deberia actualizar un item solo si es del usuario
   def update(self,request,*args,**kwargs):

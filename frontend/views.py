@@ -13,4 +13,12 @@ def loadAddProduct(request):
   return render(request, 'agregar-producto.html',context)
 
 def loadViewProducts(request):
-  return render(request, 'ver-productos.html')
+    items = Item.objects.all()
+    extendedusers = ExtendedUser.objects.all()
+    itemcombined=[]
+    for item in items:
+      specific_user = extendedusers.get(api_key=item.user_key)
+      object = {'item':item,'user':specific_user}
+      itemcombined.append(object)
+    context = {'items': itemcombined}
+    return render(request, 'ver-productos.html', context)

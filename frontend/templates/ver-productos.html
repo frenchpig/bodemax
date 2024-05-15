@@ -1,14 +1,8 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
 
 {%block title%}Agregado{% endblock %}
-
-<!-- id = models.AutoField(primary_key=True)
-  name = models.CharField(max_length=100)
-  price = models.IntegerField()
-  stock = models.IntegerField()
-  description = models.TextField()
-  category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True) -->
 
   
 {% block styles %}
@@ -48,34 +42,34 @@
               <th scope="col">Stock</th>
               <th scope="col">Descripcion</th>
               <th scope="col">Categoria</th>
+              <th scope="col">Usuario</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Juguete de bebe</td>
-              <td>$5.000</td>
-              <td>20</td>
-              <td>Un juguete para tu bebe</td>
-              <td>Infantes</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Juguete de perro</td>
-              <td>$10.000</td>
-              <td>20</td>
-              <td>Un juguete para tu perro</td>
-              <td>Caninos</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Juguete de Gato</td>
-              <td>$15.000</td>
-              <td>20</td>
-              <td>Un juguete para tu gato</td>
-              <td>Felinos</td>
-            </tr>
-            <!-- Additional rows here -->
+            {% for element in items %}
+              <tr>
+                <td class="item-id">{{ element.item.id }}</td>
+                <td>{{ element.item.name }}</td>
+                <td class="item-price">${{ element.item.price | intcomma }}</td>
+                <td class="item-stock">{{ element.item.stock }}</td>
+                <td>{{ element.item.description }}</td>
+                <td>{{ element.item.category }}</td>
+                <td class="user-username">{{ element.user.user.username }}</td>
+                <td class="user-key" hidden>{{ element.item.user_key }}</td>
+                <td class="buttons-col">
+                  <div class='row'>
+                    <div class='col'>
+                      <button class='btn btn-primary'><i class="bi bi-pencil-fill"></i></button>
+                    </div>
+                    <div class='col'>
+                      <button class='btn btn-danger'><i class="bi bi-trash-fill"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            
           </tbody>
         </table>
       </div>
@@ -85,5 +79,6 @@
 {% endblock %}
 
 {% block scripts %}
-
+  <script src="{% static 'js/eliminar-producto.js' %}"></script>
+  <script src="{% static 'js/editar-producto.js' %}"></script>
 {% endblock %}
