@@ -34,7 +34,6 @@ class ItemViewSet(viewsets.ModelViewSet):
   def list(self, request, *args, **kwargs):
     #recupera la api key recepcionada comprobando de que exista
     api_key = request.GET.get('user_key',None)
-    print(api_key)
     if api_key is None:
       return Response({'error': 'api_key required'}, status=status.HTTP_400_BAD_REQUEST)
     #comprueba la valides de dicha api key con datos de la BBDD
