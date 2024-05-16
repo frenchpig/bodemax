@@ -7,8 +7,7 @@ function getCoords(callback) {
       callback(ubicacion)
       });
   } else {
-    alert('Manito nose aceptame la localizacion')
-    return "Error xd"
+    return "Error..."
   }
 }
 function getWeather(latitud, longitud,callback) {
@@ -27,7 +26,6 @@ function getWeather(latitud, longitud,callback) {
 
 getCoords(function (ubicacion){
   getWeather(ubicacion.latitud,ubicacion.longitud,function(data){
-    console.log(data);
     let temperatura = data.main.temp-273.15;
     let texto = document.getElementById("temperatura");
     texto.innerHTML = `${temperatura.toFixed(1)}°C`;
