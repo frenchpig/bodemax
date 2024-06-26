@@ -42,6 +42,26 @@ def loadViewProducts(request):
       context = {'items':itemcombined}
     return render(request, 'ver-productos.html', context)
 
+def loadViewSolicitud(request):
+    extended_user = request.user.extendeduser
+    if extended_user.role == 'admin':
+      items = Item.objects.all()
+      extendedusers = ExtendedUser.objects.all()
+      itemcombined=[]
+      for item in items:
+        specific_user = extendedusers.get(api_key=item.user_key)
+        object = {'item':item,'user':specific_user}
+        itemcombined.append(object)
+      context = {'items': itemcombined}
+    if extended_user.role == 'user':
+      items = Item.objects.filter(user_key=extended_user.api_key)
+      itemcombined=[]
+      for item in items:
+        object = {'item':item,'user':extended_user}
+        itemcombined.append(object)
+      context = {'items':itemcombined}
+    return render(request, 'crear-solicitud.html', context)
+
 
 
 def loadViewLogin(request):

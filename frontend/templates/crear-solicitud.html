@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{%block title%}Agregado{% endblock %}
+
+  
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/ver-productos.css' %}">
+{% endblock %}
+  
+{% block content %}
+<div class="row w-100">
+  <h1 href="https://www.youtube.com/watch?v=ggDbDRUauzo&ab_channel=billnyetherussianspy">Crear Solicitud</h1>
+</div>
+<div class="row">
+  <div class="col-8">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="btnBuscar">
+      <button class="btn btn-success" type="button" id="btnBuscar"><i class="bi bi-search"></i></button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid vh-100">
+  <div class="row">
+    <div class="card custom-card">
+      <div class="card-body overflow-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Usuario</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for element in items %}
+              <tr>
+                <td class="item-id">{{ element.item.id }}</td>
+                <td class="item-name">{{ element.item.name }}</td>
+                <td class="item-price">${{ element.item.price | intcomma }}</td>
+                <td class="item-stock">{{ element.item.stock }}</td>
+                <td>{{ element.item.description }}</td>
+                <td>{{ element.item.category }}</td>
+                <td class="user-username">{{ element.user.user.username }}</td>
+                <td class="user-key" hidden>{{ element.item.user_key }}</td>
+                <td class="buttons-col">
+                  <div class='row'>
+                    <div class='col'>
+                      <button class='btn btn-success add-button'><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA DE SOLICITUD -->
+  <h1 class="my-2">Solicitud</h1>
+  <div class="row">
+    <div class="card custom-card">
+      <div class="card-body overflow-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Precio</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="tblBodySolicitud">
+            
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/crear-solicitud.js' %}"></script>
+{% endblock %}

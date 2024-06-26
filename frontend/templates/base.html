@@ -39,6 +39,10 @@
             </div>
             <hr>
             <div class="row">
+              <a href="/crear-solicitud"><h4>Crear Solicitud</h4></a>
+            </div>
+            <hr>
+            <div class="row">
               <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <button class="btn btn-danger" type="submit">Cerrar sesión</button>

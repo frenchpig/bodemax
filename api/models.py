@@ -53,3 +53,15 @@ class Item(models.Model):
   def __str__(self):
     txt = "{0} - Nombre: {1}, Precio: {2}, Stock: {3}"
     return txt.format(self.id,self.name,self.price,self.stock)
+  
+# Tabla de solicitud
+
+class Solicitud(models.Model):
+  id = models.AutoField(primary_key=True)
+  size = models.CharField(max_length=10)
+  items = models.ManyToManyField(Item, through='SolicitudItem')
+
+class SolicitudItem(models.Model):
+  solicitud = models.ForeignKey(Solicitud, on_delete=models.CASCADE)
+  item = models.ForeignKey(Item, on_delete=models.CASCADE)
+  amount = models.IntegerField()

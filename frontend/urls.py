@@ -9,5 +9,6 @@ urlpatterns = [
   path('ver-productos', views.loadViewProducts),
   path('logout/', auth_views.LogoutView.as_view(),name='logout'),
   path('login/',views.loadViewLogin, name='login'),
+  path('crear-solicitud',views.loadViewSolicitud, name='crear-solicitud'),
 ]
 
