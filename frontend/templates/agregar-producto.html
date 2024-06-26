@@ -61,6 +61,7 @@
           <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del producto"></textarea>
         </div>
         {% comment %} Usuario a agregar el item {% endcomment %}
+        {% if isAdmin %}
         <label for="categoria" class="form-label">Usuario</label>
         <div class="input-group mb-3">
           <select class="form-select" id="user" name="user">
@@ -70,12 +71,18 @@
             {% endfor %}
           </select>
         </div>
-        <button id="addItemButton" type="button" class="btn btn-primary">Agregar Producto</button>
+        {% endif %}
+        <button {% if isAdmin == False %}api-key="hola"{% endif %} id="addItemButton" type="button" class="btn btn-primary">Agregar Producto</button>
     </div>
   </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+  <script type="text/javascript">
+    var isAdmin = {{ isAdmin|yesno:"true,false" }};
+    var apiKey = "{{ api_key }}";
+
+  </script>
   <script src="{% static 'js/agregar-producto.js' %}"></script>
 {% endblock %}

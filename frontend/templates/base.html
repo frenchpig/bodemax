@@ -29,13 +29,27 @@
             <a href="/"><h3>Inicio</h3></a>
           </div>
           <hr>
-          <div class="row">
-            <a href="/agregar-producto"><h4>Agregar Producto</h4></a>
-          </div>
-          <hr>
-          <div class="row">
-            <a href="/ver-productos"><h4>Ver Productos</h4></a>
-          </div>
+          {% if user.is_authenticated %}
+            <div class="row">
+              <a href="/agregar-producto"><h4>Agregar Producto</h4></a>
+            </div>
+            <hr>
+            <div class="row">
+              <a href="/ver-productos"><h4>Ver Productos</h4></a>
+            </div>
+            <hr>
+            <div class="row">
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Cerrar sesión</button>
+              </form>
+            </div>
+          {% else %}
+            <div class="row">
+              <a href="/login"><h4>Iniciar Sesion</h4></a>
+            </div>
+            <hr>
+          {% endif %}
         </div>
       </div>
     </div>

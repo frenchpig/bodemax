@@ -7,8 +7,14 @@ from django.dispatch import receiver
 # Create your models here.
 #Debido a que cada llave de la api esta asociada a un usuario se tuvo que extender el modelo de usario para permitir el nuevo campo llamado api_key
 class ExtendedUser(models.Model):
+  ROLE_CHOICES = [
+    ('user','user'),
+    ('admin','admin'),
+  ]
+
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   api_key = models.CharField(max_length=8,unique=True,blank=True)
+  role = models.CharField(max_length=5,choices=ROLE_CHOICES,default='user')
 
   def save(self, *args, **kwargs):
     if not self.api_key:

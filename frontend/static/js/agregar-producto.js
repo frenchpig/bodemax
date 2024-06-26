@@ -1,6 +1,14 @@
-let inputId = ['nombre', 'categoria', 'precio', 'stock', 'descripcion', 'user']
+let dataMapping;
+let inputId;
+if (isAdmin){
+  dataMapping = { 'nombre': 'name', 'categoria': 'category', 'precio': 'price', 'stock': 'stock', 'descripcion': 'description', 'user': 'user_key' };
+  inputId = ['nombre', 'categoria', 'precio', 'stock', 'descripcion', 'user']
+}else {
+  dataMapping = { 'nombre': 'name', 'categoria': 'category', 'precio': 'price', 'stock': 'stock', 'descripcion': 'description', 'user': 'user_key' };
+  inputId = ['nombre', 'categoria', 'precio', 'stock', 'descripcion']
+}
 let addItemButton = document.getElementById('addItemButton');
-let dataMapping = { 'nombre': 'name', 'categoria': 'category', 'precio': 'price', 'stock': 'stock', 'descripcion': 'description', 'user': 'user_key' };
+
 
 addItemButton.addEventListener('click', function () {
   let data = { 'name': null, 'price': null, 'stock': null, 'description': null, 'category': null, 'user_key': null }
@@ -9,6 +17,9 @@ addItemButton.addEventListener('click', function () {
     let value = input.value;
     data[dataMapping[element]] = value;
   });
+  if (!isAdmin){
+    data['user_key']=apiKey;
+  }
   addToDataBase(data);
   clearAddInputs();
 });

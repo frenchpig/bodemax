@@ -10,6 +10,11 @@
   </div>
   
 </div>
+{% if user.is_authenticated %}
+  <h1>You are logged! 😁</h1>
+{% else %}
+<h1>You are not logged 😔</h1>
+{% endif %}
 <div class="row">
   <div class="col d-flex justify-content-center">
     <h1 class="display-4">Almacenamos, tu vendes</h1>
