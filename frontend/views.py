@@ -52,14 +52,14 @@ def loadViewSolicitud(request):
         specific_user = extendedusers.get(api_key=item.user_key)
         object = {'item':item,'user':specific_user}
         itemcombined.append(object)
-      context = {'items': itemcombined}
+      context = {'items': itemcombined,'api_key':extended_user.api_key}
     if extended_user.role == 'user':
       items = Item.objects.filter(user_key=extended_user.api_key)
       itemcombined=[]
       for item in items:
         object = {'item':item,'user':extended_user}
         itemcombined.append(object)
-      context = {'items':itemcombined}
+      context = {'items':itemcombined,'api_key':extended_user.api_key}
     return render(request, 'crear-solicitud.html', context)
 
 
@@ -78,3 +78,16 @@ def loadViewLogin(request):
   if request.method == 'GET':
     context = {'failedAuth': False}
     return render(request, 'login.html',context)
+  
+def loadViewVerSolicitudes(request):
+  extended_user = request.user.extendeduser
+  if extended_user.role == 'admin':
+    solicitudes=Solicitud.objects.all()
+    solicitudes_items=SolicitudItem.objects.all()
+    context = {'solicitudes':solicitudes,'solicitudes_items':solicitudes_items,'isAdmin':True}
+  if extended_user.role=='user':
+    solicitudes=Solicitud.objects.filter(user_key=extended_user.api_key)
+    solicitud_items=SolicitudItem.objects.filter(solicitud__in=solicitudes)
+    context = {'solicitudes':solicitudes,'solicitudes_items':solicitud_items,'isAdmin':False}
+  return render(request, 'ver-solicitudes.html', context)
+

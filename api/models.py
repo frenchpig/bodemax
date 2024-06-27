@@ -60,6 +60,7 @@ class Solicitud(models.Model):
   id = models.AutoField(primary_key=True)
   size = models.CharField(max_length=10)
   items = models.ManyToManyField(Item, through='SolicitudItem')
+  user_key = models.CharField(max_length=8, default='AABB00')
 
 class SolicitudItem(models.Model):
   solicitud = models.ForeignKey(Solicitud, on_delete=models.CASCADE)

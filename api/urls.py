@@ -5,8 +5,10 @@ from .views import *
 
 router=DefaultRouter()
 router.register(r'items',ItemViewSet)
+router.register(r'solicitudes',SolicitudViewSet)
 
 urlpatterns = [
-  path('',include(router.urls))
+  path('',include(router.urls)),
+  path('create-solicitud',create_solicitud,name='create-solicitud'),
 ]
 

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{%block title%}Agregado{% endblock %}
+
+  
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/ver-productos.css' %}">
+{% endblock %}
+  
+{% block content %}
+<div class="row w-100">
+  <h1 href="https://www.youtube.com/watch?v=ggDbDRUauzo&ab_channel=billnyetherussianspy">Ver Solicitudes</h1>
+</div>
+<div class="row">
+  <div class="col-8">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="btnBuscar">
+      <button class="btn btn-success" type="button" id="btnBuscar"><i class="bi bi-search"></i></button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid vh-100">
+  {% for solicitud in solicitudes %}
+    <h6>Tamaño: {{ solicitud.size }}</h6>
+    <div class="row mt-5">
+      <div class="card custom-card">
+        <div class="card-body overflow-scroll">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Item</th>
+                <th scope="col">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for solicitud_item in solicitud.solicituditem_set.all %}
+                <tr>
+                  <td>{{ solicitud_item.item.id }}</td>
+                  <td>{{ solicitud_item.item.name }}</td>
+                  <td>{{ solicitud_item.amount }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col">
+              <button onclick="eliminarSolicitud('{{solicitud.user_key}}','{{solicitud.id}}')" class="btn btn-danger w-100 my-3"> Eliminar </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {% endfor %}
+  
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/ver-solicitudes.js' %}"></script>
+{% endblock %}

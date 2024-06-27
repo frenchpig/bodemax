@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from .models import Item, ExtendedUser
-from .serializers import ItemSerializer
+from .models import Item, ExtendedUser, Solicitud, SolicitudItem
+from .serializers import ItemSerializer, SolicitudSerializer
 import json
 # Create your views here.
 
@@ -75,7 +75,64 @@ class ItemViewSet(viewsets.ModelViewSet):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class SolicitudViewSet(viewsets.ModelViewSet):
+  queryset=Solicitud.objects.all()
+  serializer_class = SolicitudSerializer
 
+  # Metodo POST
+  def create(self,request,*args,**kwargs):
+    data = request.data
+    api_key = data[1]["api_key"]
+    solicitud_data = data[0]["solicitud"]
+    cantidad = 0
+    for item_data  in solicitud_data:
+      item = Item.objects.get(id=item_data["id"])
+      if item.stock<item_data['amount']:
+        return Response({'error':f'Se solicitaron mas {item_data["name"]} de los que se encuentran en stock'})
+      cantidad += item_data["amount"]
+    print(cantidad)
+    if cantidad == 1:
+      size = 'S'
+    if cantidad >= 2:
+      size = 'M'
+    if cantidad >= 6:
+      size = 'L'
+    if cantidad>10:
+      size = 'XL'
+    solicitud = Solicitud.objects.create(size=size,user_key=api_key)
+    for item_data in solicitud_data:
+      item = Item.objects.get(id=item_data["id"])
+      item.stock = item.stock - item_data['amount']
+      item.save()
+      SolicitudItem.objects.create(solicitud=solicitud,item=item,amount=item_data["amount"])
+    return Response({'message':'Solicitud Creada'})
+  
+  def destroy(self, request, *args, **kwargs):
+    # Obtener la id de la solicitud de los argumentos de la función
+    solicitud_id = self.kwargs['pk']
+    # Obtener la api_key del cuerpo de la solicitud
+    api_key = request.data.get('api_key', None)
+
+    # Comprobar si la api_key fue proporcionada
+    if api_key is None:
+        return Response({'error': 'api_key is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        # Intentar obtener la solicitud con la id y la api_key proporcionadas
+        solicitud = Solicitud.objects.get(id=solicitud_id, user_key=api_key)
+        # Si la solicitud existe y corresponde a la api_key, eliminarla
+        solicitud.delete()
+        return Response({'message': 'Solicitud eliminada correctamente'}, status=status.HTTP_200_OK)
+    except Solicitud.DoesNotExist:
+        # Si la solicitud no existe, devolver un error
+        return Response({'error': 'Solicitud no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+    
+
+def create_solicitud(request):
+  if request.method == 'POST':
+    print('POSTING')
+    return JsonResponse({'message':'WIP'})
+  return JsonResponse({'message':'WIP'})
 
 def create_item(request):
     # Lógica para crear un ítem

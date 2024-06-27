@@ -85,6 +85,12 @@
             
           </tbody>
         </table>
+        
+      </div>
+      <div class="row">
+        <div class="col">
+          <button id="saveSolicitud" class="btn btn-primary w-100 my-3"> Solicitar </button>
+        </div>
       </div>
     </div>
   </div>
@@ -92,5 +98,8 @@
 {% endblock %}
 
 {% block scripts %}
+  <script type="text/javascript">
+    var apiKey = "{{ api_key }}";
+  </script>
   <script src="{% static 'js/crear-solicitud.js' %}"></script>
 {% endblock %}
